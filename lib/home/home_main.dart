@@ -23,7 +23,7 @@ class _HomeMainState extends State<HomeMain> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    headBackground = Colors.blueGrey;
+    headBackground = Color(AppColors.ThemeBackground);
     _pageController = PageController(initialPage: _currentIndex);
     _pageView = [ConversationList(), ContactList(), Find(), PersonalCenter()];
   }
@@ -45,6 +45,7 @@ class _HomeMainState extends State<HomeMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: headBackground,
         title: Text(
           "微信",
@@ -126,7 +127,7 @@ class _HomeMainState extends State<HomeMain> {
               icon: IconButton(
                 icon: Icon(
                   IconData(0xe603, fontFamily: Contants.IconFontFamily),
-                  size: 26,
+                  size: 27,
                   color: Color(AppColors.TitleTextColor),
                 ),
               ),

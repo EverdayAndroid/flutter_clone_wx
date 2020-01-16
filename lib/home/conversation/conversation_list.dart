@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clone_wx/home/conversation/conversation_item.dart';
+import 'package:flutter_clone_wx/home/conversation/device/deviceI_tem.dart';
 import 'package:flutter_clone_wx/home/conversation/entity/conversation.dart';
 
 //会话列表
@@ -19,11 +20,16 @@ class _ConversationListState extends State<ConversationList> {
 
   @override
   Widget build(BuildContext context) {
+
     return ListView.builder(
       itemBuilder: (context, index) {
-        return ConversationItem( _list[index]);
+        if(index == 0){
+          return DeviceItem(deviceEnum: DeviceEnum.MAC,);
+        }else{
+          return ConversationItem( _list[index-1]);
+        }
       },
-      itemCount: _list.length,
+      itemCount: _list.length+1,
     );
   }
 }

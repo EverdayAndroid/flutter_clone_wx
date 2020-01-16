@@ -9,6 +9,12 @@ class AppColors {
   static const ConversationMuteIconColor = 0xffd8d8d8;   //会话铃铛颜色
   static const MenumTextColor = 0xffffffff;// 菜单栏文字颜色
   static const MenumBackgroundColor = 0xff333333;// 菜单栏背景颜色
+  static const Blackcolor = Colors.black;
+  static const ThemeBackground = 0xffEDEDED;
+  static const WhiteColor = Colors.white;
+  static const ConversationBottomColor = 0xFFF7F7F7;  //会话详情底部布局背景颜色
+  static const DeviceTitleColor = 0xff606062;  //设备描述文字颜色
+
 }
 
 class AppStyles {
@@ -20,6 +26,11 @@ class AppStyles {
       fontSize: 20,
       color: Color(AppColors.TitleTextColor),
       fontWeight: FontWeight.w600);
+  //会话列表设备文字样式
+  static const deviceTitleStyle = TextStyle(
+    fontSize: 13,
+    color: Color(AppColors.DeviceTitleColor)
+  );
   //会话标题样式
   static const conversationTitleStyle = TextStyle(
     fontSize: 15,
@@ -42,7 +53,12 @@ class AppStyles {
   );
 }
 
-class Routes {}
+class Routes {
+  static const Home = "/";
+  //会话详情
+  static const ConversationDetails = "/home/conversation/details";
+
+}
 
 class Contants {
   //首页底部bottom大小
@@ -65,4 +81,7 @@ class Contants {
 
   //菜单栏边距
   static const MenumMargin = 10.0;
+
+  //圆角弧度
+  static const Radian = 6.0;
 }

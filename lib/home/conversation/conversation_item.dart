@@ -11,6 +11,38 @@ class ConversationItem extends StatelessWidget {
   Widget avater;
   Widget avatarContainer;
   Offset _topPos;
+
+  showButtonMenu(BuildContext context, Offset offset) {
+    //会生成固定的一个x轴和y轴的坐标系
+    RenderBox overlay = Overlay.of(context).context.findRenderObject();
+    RelativeRect position = RelativeRect.fromLTRB(offset.dx, offset.dy,
+        overlay.size.width - offset.dx, overlay.size.height - offset.dy);
+    showMenu(
+            context: context,
+            position: position,
+            items: <PopupMenuItem<String>>[
+              PopupMenuItem(
+                child: Text("标为未读"),
+                value: "标为未读",
+              ),
+              PopupMenuItem(
+                child: Text("置顶聊天"),
+                value: "置顶聊天",
+              ),
+              PopupMenuItem(
+                child: Text("删除该聊天"),
+                value: "删除该聊天",
+              ),
+            ],
+            initialValue: "未选择",
+            color: Colors.black38)
+        .then((str) {
+      if (str != null) {
+        Fluttertoast.showToast(msg: str);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_conversation.isAvatarFromNet()) {
@@ -18,18 +50,21 @@ class ConversationItem extends StatelessWidget {
         width: Contants.ConversationAvatarSize,
         height: Contants.ConversationAvatarSize,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(6.0),
+          borderRadius: BorderRadius.circular(Contants.Radian),
           child: FadeInImage.assetNetwork(
               placeholder: "assets/images/default_nor_avatar.png",
               image: _conversation.avatar),
         ),
       );
     } else {
-      avater = Image.asset(
-        _conversation.avatar,
-        width: Contants.ConversationAvatarSize,
-        height: Contants.ConversationAvatarSize,
-      );
+      avater = ClipRRect(
+        borderRadius: BorderRadius.circular(Contants.Radian),
+        child: Image.asset(
+          _conversation.avatar,
+          width: Contants.ConversationAvatarSize,
+          height: Contants.ConversationAvatarSize,
+        ),
+      ) ;
     }
     if (_conversation.unreadMsgCount > 0) {
       Widget unreadMsgCountText = Container(
@@ -41,7 +76,7 @@ class ConversationItem extends StatelessWidget {
           style: AppStyles.UnreadMsgCountDot,
         ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0), color: Colors.red),
+            borderRadius: BorderRadius.circular(Contants.MenumMargin), color: Colors.red),
       );
 
       avatarContainer = Stack(
@@ -62,11 +97,16 @@ class ConversationItem extends StatelessWidget {
 
     return Material(
       child: InkWell(
-        onTap: (){},
-        onLongPress: (){
-          Fluttertoast.showToast(msg: "长安事件");
+        onTap: () {
+          Navigator.pushNamed(context, Routes.ConversationDetails,
+              arguments: _conversation.title).then((value){
+                Fluttertoast.showToast(msg: value,gravity: ToastGravity.CENTER);
+          });
         },
-        onTapDown: (details){
+        onLongPress: () {
+          showButtonMenu(context, _topPos);
+        },
+        onTapDown: (details) {
           _topPos = details.globalPosition;
         },
         child: FlatButton(
@@ -75,7 +115,7 @@ class ConversationItem extends StatelessWidget {
               child: Row(children: <Widget>[
                 avatarContainer,
                 SizedBox(
-                  width: 10,
+                  width: Contants.MenumMargin,
                 ),
                 Container(
                   child: Expanded(
@@ -130,6 +170,7 @@ class ConversationItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         border: Border(
                             bottom: BorderSide(
+                              width: 0.5,
                                 color: Color(AppColors.DividerColor),
                                 style: BorderStyle.solid))),
                   )),
@@ -137,6 +178,7 @@ class ConversationItem extends StatelessWidget {
               ]),
             )),
       ),
+      color: AppColors.WhiteColor,
     );
   }
 }

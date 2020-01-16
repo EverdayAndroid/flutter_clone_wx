@@ -11,6 +11,7 @@ class _ContactListState extends State<ContactList> {
   Widget build(BuildContext context) {
     return Center(
       child: Text("联系人"),
+
     );
   }
 }
