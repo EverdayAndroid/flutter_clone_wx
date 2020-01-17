@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_clone_wx/constant/constants.dart';
 import 'package:flutter_clone_wx/home/contact/contact_list.dart';
 import 'package:flutter_clone_wx/home/conversation/conversation_list.dart';
@@ -19,10 +20,12 @@ class _HomeMainState extends State<HomeMain> {
   int _currentIndex = 0;
   PageController _pageController;
   List<Widget> _pageView;
+  String title;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    title = "微信";
     headBackground = Color(AppColors.ThemeBackground);
     _pageController = PageController(initialPage: _currentIndex);
     _pageView = [ConversationList(), ContactList(), Find(), PersonalCenter()];
@@ -32,7 +35,9 @@ class _HomeMainState extends State<HomeMain> {
     return Row(
       children: <Widget>[
         Icon(iconData),
-        SizedBox(width: Contants.MenumMargin,),
+        SizedBox(
+          width: Contants.MenumMargin,
+        ),
         Text(
           title,
           style: AppStyles.menumTitleStyle,
@@ -43,178 +48,202 @@ class _HomeMainState extends State<HomeMain> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Color(AppColors.ThemeBackground)
+    ));
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: headBackground,
-        title: Text(
-          "微信",
-          style: AppStyles.titleStyle,
-        ),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(
-                IconData(0xe638, fontFamily: Contants.IconFontFamily),
-                size: 25,
-                color: Color(AppColors.TitleTextColor),
-              ),
-              onPressed: () {
-                Fluttertoast.showToast(
-                    msg: "搜索",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIos: 1,
-                    textColor: Colors.red);
-              }),
-          Container(
-            child: PopupMenuButton(
-              itemBuilder: (context) {
-                return <PopupMenuItem<ActionItems>>[
-                  PopupMenuItem(
-                    child: _buildPopupMunuIem(
-                        IconData(0xeb81, fontFamily: Contants.IconFontFamily),
-                        "发起群聊"),
-                    value: ActionItems.GROUP_CHAR,
-                  ),
-                  PopupMenuItem(
-                    child: _buildPopupMunuIem(
-                        IconData(0xe618, fontFamily: Contants.IconFontFamily),
-                        "添加朋友"),
-                    value: ActionItems.ADD_FRIEND,
-                  ),
-                  PopupMenuItem(
-                    child: _buildPopupMunuIem(
-                        IconData(0xe66d, fontFamily: Contants.IconFontFamily),
-                        "扫一扫"),
-                    value: ActionItems.QR_SCAN,
-                  ),
-                  PopupMenuItem(
-                    child: _buildPopupMunuIem(
-                        IconData(0xe613, fontFamily: Contants.IconFontFamily),
-                        "收付款"),
-                    value: ActionItems.PALMENT,
-                  ),
-                  PopupMenuItem(
-                    child: _buildPopupMunuIem(
-                        IconData(0xe614, fontFamily: Contants.IconFontFamily),
-                        "帮助与反馈"),
-                    value: ActionItems.HELP,
-                  ),
-                ];
-              },
-              tooltip: "123",
-              color: Color(AppColors.MenumBackgroundColor),
-              onSelected: (actionItems) {
-                setState(() {
-                  if (actionItems == ActionItems.GROUP_CHAR) {
-                    Fluttertoast.showToast(
-                        msg: "发起群聊", gravity: ToastGravity.CENTER);
-                  } else if (actionItems == ActionItems.ADD_FRIEND) {
-                    Fluttertoast.showToast(
-                        msg: "添加朋友", gravity: ToastGravity.CENTER);
-                  } else if (actionItems == ActionItems.QR_SCAN) {
-                    Fluttertoast.showToast(
-                        msg: "扫一扫", gravity: ToastGravity.CENTER);
-                  } else if (actionItems == ActionItems.PALMENT) {
-                    Fluttertoast.showToast(
-                        msg: "收付款", gravity: ToastGravity.CENTER);
-                  } else if (actionItems == ActionItems.HELP) {
-                    Fluttertoast.showToast(
-                        msg: "帮助与反馈", gravity: ToastGravity.CENTER);
-                  }
-                });
-              },
-              icon: IconButton(
+        appBar: AppBar(
+          brightness: Brightness.light,
+
+          elevation: 0,
+          backgroundColor: headBackground,
+          title: Text(
+            title,
+            style: AppStyles.titleStyle,
+          ),
+          actions: <Widget>[
+            IconButton(
                 icon: Icon(
-                  IconData(0xe603, fontFamily: Contants.IconFontFamily),
-                  size: 27,
+                  IconData(0xe638, fontFamily: Contants.IconFontFamily),
+                  size: 25,
                   color: Color(AppColors.TitleTextColor),
                 ),
+                onPressed: () {
+                  Fluttertoast.showToast(
+                      msg: "搜索",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIos: 1,
+                      textColor: Colors.red);
+                }),
+            Container(
+              child: PopupMenuButton(
+                itemBuilder: (context) {
+                  return <PopupMenuItem<ActionItems>>[
+                    PopupMenuItem(
+                      child: _buildPopupMunuIem(
+                          IconData(0xeb81, fontFamily: Contants.IconFontFamily),
+                          "发起群聊"),
+                      value: ActionItems.GROUP_CHAR,
+                    ),
+                    PopupMenuItem(
+                      child: _buildPopupMunuIem(
+                          IconData(0xe618, fontFamily: Contants.IconFontFamily),
+                          "添加朋友"),
+                      value: ActionItems.ADD_FRIEND,
+                    ),
+                    PopupMenuItem(
+                      child: _buildPopupMunuIem(
+                          IconData(0xe66d, fontFamily: Contants.IconFontFamily),
+                          "扫一扫"),
+                      value: ActionItems.QR_SCAN,
+                    ),
+                    PopupMenuItem(
+                      child: _buildPopupMunuIem(
+                          IconData(0xe613, fontFamily: Contants.IconFontFamily),
+                          "收付款"),
+                      value: ActionItems.PALMENT,
+                    ),
+                    PopupMenuItem(
+                      child: _buildPopupMunuIem(
+                          IconData(0xe614, fontFamily: Contants.IconFontFamily),
+                          "帮助与反馈"),
+                      value: ActionItems.HELP,
+                    ),
+                  ];
+                },
+                tooltip: "123",
+                color: Color(AppColors.MenumBackgroundColor),
+                onSelected: (actionItems) {
+                  setState(() {
+                    if (actionItems == ActionItems.GROUP_CHAR) {
+                      Fluttertoast.showToast(
+                          msg: "发起群聊", gravity: ToastGravity.CENTER);
+                    } else if (actionItems == ActionItems.ADD_FRIEND) {
+                      Fluttertoast.showToast(
+                          msg: "添加朋友", gravity: ToastGravity.CENTER);
+                    } else if (actionItems == ActionItems.QR_SCAN) {
+                      Fluttertoast.showToast(
+                          msg: "扫一扫", gravity: ToastGravity.CENTER);
+                    } else if (actionItems == ActionItems.PALMENT) {
+                      Fluttertoast.showToast(
+                          msg: "收付款", gravity: ToastGravity.CENTER);
+                    } else if (actionItems == ActionItems.HELP) {
+                      Fluttertoast.showToast(
+                          msg: "帮助与反馈", gravity: ToastGravity.CENTER);
+                    }
+                  });
+                },
+                icon: IconButton(
+                  icon: Icon(
+                    IconData(0xe603, fontFamily: Contants.IconFontFamily),
+                    size: 27,
+                    color: Color(AppColors.TitleTextColor),
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: Container(
-        color: Colors.white,
-        child: PageView.builder(
-          controller: _pageController,
-          itemCount: _pageView.length,
-          itemBuilder: (context, index) {
-            return _pageView[_currentIndex];
-          },
-          onPageChanged: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
+          ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-          elevation: 3,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            }
-            );
-          },
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(
-                  IconData(0xe601, fontFamily: Contants.IconFontFamily),
-                  color: Color(AppColors.HomeButtomTextColor),
-                  size: Contants.Home_Bottom_Size,
-                ),
-                title: Text(
-                  Contants.HOME_WeChat,
-                  style: AppStyles.homeButtomStyle,
-                ),
-                activeIcon: Icon(
-                  IconData(0xe61e, fontFamily: Contants.IconFontFamily),
-                  size: Contants.Home_Bottom_Size,
-                )),
-            BottomNavigationBarItem(
-                icon: Icon(
-                    IconData(0xe60a, fontFamily: Contants.IconFontFamily),
+        body: Container(
+          color: Colors.white,
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: _pageView.length,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                title = "微信";
+              } else if (index == 1) {
+                title = "通讯录";
+              } else if (index == 2) {
+                title = "发现";
+              } else {
+                title = "";
+              }
+              return _pageView[_currentIndex];
+            },
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Color(AppColors.ThemeBackground),
+            elevation: 3,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _currentIndex,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+                if (index == 0) {
+                  title = "微信";
+                } else if (index == 1) {
+                  title = "通讯录";
+                } else if (index == 2) {
+                  title = "发现";
+                } else {
+                  title = "";
+                }
+              });
+            },
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    IconData(0xe601, fontFamily: Contants.IconFontFamily),
                     color: Color(AppColors.HomeButtomTextColor),
-                    size: Contants.Home_Bottom_Size),
-                title: Text(
-                  Contants.HOME_Communication,
-                  style: TextStyle(color: Colors.black),
-                ),
-                activeIcon: Icon(
-                  IconData(0xe685, fontFamily: Contants.IconFontFamily),
-                  size: Contants.Home_Bottom_Size,
-                )),
-            BottomNavigationBarItem(
-                icon: Icon(
-                    IconData(0xe649, fontFamily: Contants.IconFontFamily),
-                    color: Color(AppColors.HomeButtomTextColor),
-                    size: Contants.Home_Bottom_Size),
-                title: Text(
-                  Contants.HOME_Find,
-                  style: AppStyles.homeButtomStyle,
-                ),
-                activeIcon: Icon(
-                  IconData(0xe611, fontFamily: Contants.IconFontFamily),
-                  size: Contants.Home_Bottom_Size,
-                )),
-            BottomNavigationBarItem(
-              icon: Icon(IconData(0xe69d, fontFamily: Contants.IconFontFamily),
-                  color: Color(AppColors.HomeButtomTextColor),
-                  size: Contants.Home_Bottom_Size),
-              title: Text(
-                Contants.HOME_My,
-                style: AppStyles.homeButtomStyle,
-              ),
-                activeIcon: Icon(
-                  IconData(0xe612, fontFamily: Contants.IconFontFamily),
-                  size: Contants.Home_Bottom_Size,
-                )
-            ),
-          ]),
+                    size: Contants.Home_Bottom_Size,
+                  ),
+                  title: Text(
+                    Contants.HOME_WeChat,
+                    style: AppStyles.homeButtomStyle,
+                  ),
+                  activeIcon: Icon(
+                    IconData(0xe61e, fontFamily: Contants.IconFontFamily),
+                    size: Contants.Home_Bottom_Size,
+                  )),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                      IconData(0xe60a, fontFamily: Contants.IconFontFamily),
+                      color: Color(AppColors.HomeButtomTextColor),
+                      size: Contants.Home_Bottom_Size),
+                  title: Text(
+                    Contants.HOME_Communication,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  activeIcon: Icon(
+                    IconData(0xe685, fontFamily: Contants.IconFontFamily),
+                    size: Contants.Home_Bottom_Size,
+                  )),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                      IconData(0xe649, fontFamily: Contants.IconFontFamily),
+                      color: Color(AppColors.HomeButtomTextColor),
+                      size: Contants.Home_Bottom_Size),
+                  title: Text(
+                    Contants.HOME_Find,
+                    style: AppStyles.homeButtomStyle,
+                  ),
+                  activeIcon: Icon(
+                    IconData(0xe611, fontFamily: Contants.IconFontFamily),
+                    size: Contants.Home_Bottom_Size,
+                  )),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                      IconData(0xe69d, fontFamily: Contants.IconFontFamily),
+                      color: Color(AppColors.HomeButtomTextColor),
+                      size: Contants.Home_Bottom_Size),
+                  title: Text(
+                    Contants.HOME_My,
+                    style: AppStyles.homeButtomStyle,
+                  ),
+                  activeIcon: Icon(
+                    IconData(0xe612, fontFamily: Contants.IconFontFamily),
+                    size: Contants.Home_Bottom_Size,
+                  )),
+            ])
     );
   }
 }

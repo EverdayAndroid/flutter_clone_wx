@@ -77,11 +77,13 @@ class Contants {
 
   static const String HOME_My = "我";
 
-  static const ConversationAvatarSize = 50.0; //会话列表头像大小
+  static const ConversationAvatarSize = 46.0; //会话列表头像大小
 
   //菜单栏边距
   static const MenumMargin = 10.0;
 
   //圆角弧度
   static const Radian = 6.0;
+  //默认头像图片
+  static const DefaultAvatar = "assets/images/default_nor_avatar.png";
 }
