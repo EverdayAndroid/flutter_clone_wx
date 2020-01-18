@@ -86,4 +86,35 @@ class Contants {
   static const Radian = 6.0;
   //默认头像图片
   static const DefaultAvatar = "assets/images/default_nor_avatar.png";
+
+  static const INDEX_BAR_WORDS = [
+    "↑",
+    "☆",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+  ];
 }
